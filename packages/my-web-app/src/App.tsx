@@ -3,8 +3,12 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
+import { useHelloWorld } from "@my-monorepo/shared/useHelloWorld";
+
 function App() {
   const [count, setCount] = useState(0)
+
+  useHelloWorld();
 
   return (
     <>
