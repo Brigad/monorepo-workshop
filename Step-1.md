@@ -1,13 +1,13 @@
 Setting up a monorepo:
 
 One directory with many projects
-- Let's initialize one web project with Next and one native project with Expo.
+- Let's initialize one web project with Vite and one native project with Expo.
 
 ```
 mkdir packages
 cd packages
 
-npx create-next-app@latest
+npm create vite@latest
 npx create-expo-app@latest
 ```
 
