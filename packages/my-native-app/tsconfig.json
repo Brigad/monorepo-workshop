@@ -4,8 +4,10 @@
     "strict": true,
     "paths": {
       "@/*": [
-        "./*"
-      ]
+        "./*",
+
+      ],
+      "@my-monorepo/shared/*": ["../util-shared/src/*"]
     }
   },
   "include": [

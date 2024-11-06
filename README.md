@@ -1,22 +1,20 @@
 # monorepo-workshop
 
+## 0 - Setup a monorepo with mixed projects
 
-## 1 - Many projects in one repository
-
-In that part we'll initialize a few projects in the same github repository.
-
-## 2 - Setting up a monorepo
-
-In that part we'll use Yarn to hoist all our common modules at the top of the repository.
-
-## 3 - Sharing some common logic
+## 1 - Sharing some common logic
 
 Let's create a util-package that will be accessible within the respective projects
+(Caveat: different imports could mess with resolution)
 
-## 4 - Sharing some platform specific logic
+## 2 - Sharing some platform specific logic
 
 Let's see how shared code behave when there are platform specificities
 
-## 5 - React Strict Dom ? React Native web ?
+## 3 - Assembling those bricks to create a design system
+
+Let's see how to define primitives components that can be shared between web & native
+
+## 4 - React Strict Dom ? React Native web ?
 
 How what we build works with the past and future of web sharing technologies
