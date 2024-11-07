@@ -5,7 +5,7 @@
 ## 1 - Sharing some common logic
 
 Let's create a util-package that will be accessible within the respective projects
-(Caveat: different imports could mess with resolution)
+(Caveat: different imports could mess with resolution - let's see how to fix that)
 
 ## 2 - Sharing some platform specific logic
 

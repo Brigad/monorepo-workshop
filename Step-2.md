@@ -37,3 +37,4 @@ We can use metro to force the resolution in many ways.
  - In the past we used to do that with babel-plugin-module-resolver
  - Now we can use the resolver.resolveRequest method in metro.config.js to do that
 
+
