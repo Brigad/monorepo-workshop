@@ -76,7 +76,7 @@ For expo, please follow the following instructions to make it compatible with mo
 </details>
 
 <br/>
-<strong>Let's add a simple function in the `src/sayHelloWorld.ts` file:</strong>
+<strong>Let's add a simple function in the `src/utils/sayHelloWorld.ts` file:</strong>
 
 <details>
   <summary>Answer</summary>
@@ -96,12 +96,40 @@ For expo, please follow the following instructions to make it compatible with mo
 <details>
   <summary>Answer</summary>
 
-  In the `packages/my-web-app/src/App.tsx` && `packages/my-native-app/app/(tabs)/index.tsx` files:
+  In the `packages/my-web-app/src/App.tsx` && `packages/my-native-app/App.tsx` files:
 
   ```tsx
-  import { sayHelloWorld } from "@my-monorepo/util-shared";
+  import { sayHelloWorld } from "@my-monorepo/util-shared/utils/sayHelloWorld";
 
   sayHelloWorld();
+  ```
+</details>
+
+<br/>
+<strong>Let's address the import issue by adding the tsconfig paths. Vite needs a plugin to process it</strong>
+
+<details>
+  <summary>Answer</summary>
+  In the `packages/my-web-app` folder:
+
+  ```sh
+  yarn add -D vite-tsconfig-paths
+  ```
+
+  In the `packages/my-web-app/vite.config.ts` file:
+
+  ```ts
+  import tsconfigPaths from 'vite-tsconfig-paths';
+
+  export default defineConfig({ plugins: [react(), tsconfigPaths()] });
+  ```
+
+  In the `packages/my-web-app/tsconfig.app.json` and the `packages/my-native-app/tsconfig.json` files:
+
+  ```json
+  "paths": {
+    "@my-monorepo/util-shared/*": ["../util-shared/src/*"]
+  }
   ```
 </details>
 
@@ -146,12 +174,83 @@ For expo, please follow the following instructions to make it compatible with mo
 <details>
   <summary>Answer</summary>
 
-  In the `packages/my-native-app/app/(tabs)/index.tsx` file:
+  In the `packages/my-native-app/App.tsx` file:
 
   ```tsx
-  import { useSayHelloWorld } from "@my-monorepo/util-shared";
+  import { useSayHelloWorld } from "@my-monorepo/util-shared/hooks/useSayHelloWorld";
 
   useSayHelloWorld();
+  ```
+</details>
+
+<br/>
+<strong>How to ensure unicity for some dependencies ?</strong>
+
+<details>
+  <summary>Answer</summary>
+
+  There are multiple ways to do that:
+  - Forcing the version of a package across the monorepo
+  - Forcing the resolution of a dependency to a specific version per project within the bundling process
+
+  To allow more flexibility, we will use the second approach.
+  To do that, we can:
+  - use babel with babel-plugin-module-resolver
+  - use metro with the disableHierarchicalLookup option (this is a bit extreme as it applies to all dependencies)
+  - use a custom resolver with metro for selected dependencies
+
+  For this example, we will use the custom resolver with metro for selected dependencies.
+
+  In the `packages/my-native-app/metro.config.js` file:
+
+  ```js
+  const path = require("path");
+
+  const librariesToDedupe = [
+    "react-native",
+    "react",
+    "react-native-safe-area-context",
+    "react-native-svg",
+  ];
+  const regexes = librariesToDedupe.map((lib) => new RegExp(`^${lib}(/.*)?$`));
+
+  const resolvePathFromProjectRoot = (filePath) => {
+    return {
+      type: "sourceFile",
+      filePath: require.resolve(filePath, {
+        paths: [projectRoot],
+      }),
+    };
+  };
+
+  config.resolver.resolveRequest = (context, moduleName, platform) => {
+    const results = regexes.find((regex) => regex.test(moduleName))?.exec(moduleName);
+    if (results?.[1]) {
+      try {
+        return resolvePathFromProjectRoot(`${moduleName}.${platform}`);
+      } catch (err) {
+        // Ignore err
+      }
+      if (platform === "ios" || platform === "android") {
+        try {
+          return resolvePathFromProjectRoot(`${moduleName}.native`);
+        } catch (err) {
+          // Ignore err
+        }
+      } else if (platform === "web") {
+        try {
+          return resolvePathFromProjectRoot(`${moduleName}.web`);
+        } catch (err) {
+          // Ignore err
+        }
+      }
+    }
+    if (results) {
+      return resolvePathFromProjectRoot(moduleName);
+    }
+
+    return context.resolveRequest(context, moduleName, platform);
+  };
   ```
 </details>
 
