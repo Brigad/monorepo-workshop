@@ -3,6 +3,7 @@
 ## 0 - Setup a monorepo with mixed projects
 
 We want to create a monorepo with a web project and a native project.
+
 I will use vite, expo and yarn but feel free to use what you want.
 
 <details>
