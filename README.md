@@ -43,10 +43,10 @@ I will use vite, expo and yarn but feel free to use what you want.
 
 ## 1 - Sharing some common logic
 
-Let's create a util-package that will be accessible within the respective projects
+<strong>Let's create a util-package that will be accessible within the respective projects</strong>
 
 <details>
-  <summary><strong>Answer</strong></summary>
+  <summary>Answer</summary>
 
   ```sh
   mkdir packages/util-shared
@@ -64,10 +64,10 @@ Let's create a util-package that will be accessible within the respective projec
   ```
 </details>
 
-Let's add a simple function in the `src/sayHelloWorld.ts` file:
+<strong>Let's add a simple function in the `src/sayHelloWorld.ts` file:</strong>
 
 <details>
-  <summary><strong>Answer</strong></summary>
+  <summary>Answer</summary>
 
   In the `packages/util-shared/src/utils/sayHelloWorld.ts` file:
 
@@ -78,10 +78,10 @@ Let's add a simple function in the `src/sayHelloWorld.ts` file:
   ```
 </details>
 
-Let's import and use the `sayHelloWorld` function in the `my-web-app` and the `my-native-app` projects
+<strong>Let's import and use the `sayHelloWorld` function in the `my-web-app` and the `my-native-app` projects</strong>
 
 <details>
-  <summary><strong>Answer</summary>
+  <summary>Answer</summary>
 
   In the `packages/my-web-app/src/App.tsx` && `packages/my-native-app/app/(tabs)/index.tsx` files:
 
@@ -92,10 +92,10 @@ Let's import and use the `sayHelloWorld` function in the `my-web-app` and the `m
   ```
 </details>
 
-Let's make a hook that uses the `sayHelloWorld` function:
+<strong>Let's make a hook that uses the `sayHelloWorld` function:</strong>
 
 <details>
-  <summary><strong>Answer</strong></summary>
+  <summary>Answer</summary>
 
   In the `packages/util-shared/src/hooks/useSayHelloWorld.ts` file:
 
@@ -114,7 +114,7 @@ Let's make a hook that uses the `sayHelloWorld` function:
 What if we were to use a different version of react in shared than in the native project ?
 
 <details>
-  <summary><strong>Answer</strong></summary>
+  <summary>Answer</summary>
 
   Let's add react 18.3.1 as a dependency in the `packages/util-shared/package.json` file:
 
@@ -128,7 +128,7 @@ What if we were to use a different version of react in shared than in the native
 Let's now use the `useSayHelloWorld` hook in the `my-native-app` project
 
 <details>
-  <summary><strong>Answer</strong></summary>
+  <summary>Answer</summary>
 
   In the `packages/my-native-app/app/(tabs)/index.tsx` file:
 
