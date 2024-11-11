@@ -296,6 +296,42 @@ We do not want to specify the platform in the import statement.
 
 <details>
   <summary>Answer</summary>
+  In the `packages/my-web-app/tsconfig.json` and the `packages/my-native-app/tsconfig.json` files:
+
+  ```json
+  "moduleSuffixes": [".web", ""],
+  ```
+  OR
+  ```json
+  "moduleSuffixes": [".ios", ".android", ".native", ""],
+  ```
+  In the `packages/my-web-app/vite.config.ts` file:
+
+  ```ts
+  resolve: {
+    extensions: [
+      ".web.ts",
+      ".web.tsx",
+      ".web.js",
+      ".web.jsx",
+      ".ts",
+      ".tsx",
+      ".js",
+      ".jsx",
+      ".json",
+      ".mjs",
+      ".cjs",
+    ],
+  },
+  ```
+
+  In the `packages/my-web-app/src/App.tsx` and the `packages/my-native-app/App.tsx` files:
+
+  ```tsx
+  import { getScreenWidth } from "@my-monorepo/util-shared/utils/getScreenWidth";
+
+  console.log(getScreenWidth());
+  ```
 </details>
 
 ## 3 - Assembling those bricks to create a design system
