@@ -46,7 +46,7 @@ I will use vite, expo and yarn but feel free to use what you want.
 Let's create a util-package that will be accessible within the respective projects
 
 <details>
-  <summary><strong>Answer:</strong> Creating the util-package</summary>
+  <summary><strong>Answer:</strong> Creating the util-shared package</summary>
 
   ```sh
   mkdir packages/util-shared
@@ -62,8 +62,33 @@ Let's create a util-package that will be accessible within the respective projec
     "@my-monorepo/util-shared": "1.0.0"
   }
   ```
+  Let's add a simple function in the `src/sayHelloWorld.ts` file:
 
-</details>
+  <details>
+    <summary><strong>Answer:</strong> Adding the sayHelloWorld function</summary>
+
+    In the `src/sayHelloWorld.ts` file:
+
+    ```ts
+    export function sayHelloWorld() {
+      console.log("Hello World");
+    }
+    ```
+  </details>
+
+  Let's import and use the `sayHelloWorld` function in the `my-web-app` and the `my-native-app` projects
+
+  <details>
+    <summary><strong>Answer:</strong> Using the sayHelloWorld function</summary>
+
+    In the `packages/my-web-app/src/App.tsx` && `packages/my-native-app/app/(tabs)/index.tsx` files:
+
+    ```tsx
+    import { sayHelloWorld } from "@my-monorepo/util-shared";
+
+    sayHelloWorld();
+    ```
+  </details>
 
 ## 2 - Sharing some platform specific logic
 
