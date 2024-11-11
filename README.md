@@ -259,7 +259,9 @@ For expo, please follow the following instructions to make it compatible with mo
 <br/>
 We now will add some platform specific logic to the shared package.
 Sometime, each platform will need some dedicated logic.
+
 Work is ongoing to make it easier to share code between web & native, with react-strict-dom and @react-native-webapis.
+
 For now, we will do it manually.
 <br/>
 <br/>
@@ -289,6 +291,7 @@ For now, we will do it manually.
 
 <br/>
 We need to make sure that the web project can import files with the `.web.ts` extension.
+
 We do not want to specify the platform in the import statement.
 <br/>
 <br/>
