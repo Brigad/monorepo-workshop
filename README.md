@@ -7,7 +7,7 @@ We want to create a monorepo with a web project and a native project.
 I will use vite, expo and yarn but feel free to use what you want.
 
 <details>
-  <summary>_Answer_: Setting up a monorepo</summary>
+  <summary><strong>Answer:</strong> Setting up a monorepo</summary>
 
   ```sh
   mkdir packages
