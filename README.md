@@ -1,16 +1,13 @@
 # monorepo-workshop
 
-## 0 - Setup a monorepo with mixed projects
+## Setup a monorepo with mixed projects
 
 We want to create a monorepo with a web project and a native project.
 
 I will use vite, expo and yarn but feel free to use what you want.
 
 <details>
-  <summary>Setting up a monorepo</summary>
-
-  One directory with many projects
-  - Let's initialize one web project with Vite and one native project with Expo.
+  <summary>**Answer**: Setting up a monorepo</summary>
 
   ```sh
   mkdir packages
@@ -47,7 +44,11 @@ I will use vite, expo and yarn but feel free to use what you want.
 ## 1 - Sharing some common logic
 
 Let's create a util-package that will be accessible within the respective projects
-(Caveat: different imports could mess with resolution - let's see how to fix that)
+
+<details>
+  <summary>Creating the util-package</summary>
+
+</details>
 
 ## 2 - Sharing some platform specific logic
 
