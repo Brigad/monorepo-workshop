@@ -62,33 +62,35 @@ Let's create a util-package that will be accessible within the respective projec
     "@my-monorepo/util-shared": "1.0.0"
   }
   ```
-  Let's add a simple function in the `src/sayHelloWorld.ts` file:
+</details>
 
-  <details>
-    <summary><strong>Answer:</strong> Adding the sayHelloWorld function</summary>
+Let's add a simple function in the `src/sayHelloWorld.ts` file:
 
-    In the `src/sayHelloWorld.ts` file:
+<details>
+  <summary><strong>Answer:</strong> Adding the sayHelloWorld function</summary>
 
-    ```ts
-    export function sayHelloWorld() {
-      console.log("Hello World");
-    }
-    ```
-  </details>
+  In the `src/sayHelloWorld.ts` file:
 
-  Let's import and use the `sayHelloWorld` function in the `my-web-app` and the `my-native-app` projects
+  ```ts
+  export function sayHelloWorld() {
+    console.log("Hello World");
+  }
+  ```
+</details>
 
-  <details>
-    <summary><strong>Answer:</strong> Using the sayHelloWorld function</summary>
+Let's import and use the `sayHelloWorld` function in the `my-web-app` and the `my-native-app` projects
 
-    In the `packages/my-web-app/src/App.tsx` && `packages/my-native-app/app/(tabs)/index.tsx` files:
+<details>
+  <summary><strong>Answer:</strong> Using the sayHelloWorld function</summary>
 
-    ```tsx
-    import { sayHelloWorld } from "@my-monorepo/util-shared";
+  In the `packages/my-web-app/src/App.tsx` && `packages/my-native-app/app/(tabs)/index.tsx` files:
 
-    sayHelloWorld();
-    ```
-  </details>
+  ```tsx
+  import { sayHelloWorld } from "@my-monorepo/util-shared";
+
+  sayHelloWorld();
+  ```
+</details>
 
 ## 2 - Sharing some platform specific logic
 
