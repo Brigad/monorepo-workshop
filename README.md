@@ -46,7 +46,22 @@ I will use vite, expo and yarn but feel free to use what you want.
 Let's create a util-package that will be accessible within the respective projects
 
 <details>
-  <summary>Creating the util-package</summary>
+  <summary><strong>Answer:</strong> Creating the util-package</summary>
+
+  ```sh
+  mkdir packages/util-shared
+  cd packages/util-shared
+  yarn init
+  ```
+  Make sure to set the name to `@my-monorepo/util-shared` and the version to `1.0.0`
+
+  Add the shared package as a dependency to the web & native projects
+
+  ```json
+  "dependencies": {
+    "@my-monorepo/util-shared": "1.0.0"
+  }
+  ```
 
 </details>
 
