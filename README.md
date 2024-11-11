@@ -9,7 +9,7 @@ I will use vite, expo and yarn but feel free to use what you want.
 For expo, please follow the following instructions to make it compatible with monorepos: https://docs.expo.dev/guides/monorepos/
 
 <details>
-  <summary><strong>Todo:</strong></summary>
+  <summary><strong>General setup</strong></summary>
 
   ```sh
   mkdir packages
@@ -41,12 +41,8 @@ For expo, please follow the following instructions to make it compatible with mo
   ]
   ```
 </details>
-
-<br/>
-
-
 <details>
-  <summary>Expo configuration</summary>
+  <summary><strong>Expo configuration</strong></summary>
 
   Create a `metro.config.js` file in the `packages/my-native-app` folder
 
