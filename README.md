@@ -64,6 +64,8 @@ I will use vite, expo and yarn but feel free to use what you want.
   ```
 </details>
 
+
+
 <strong>Let's add a simple function in the `src/sayHelloWorld.ts` file:</strong>
 
 <details>
@@ -78,6 +80,8 @@ I will use vite, expo and yarn but feel free to use what you want.
   ```
 </details>
 
+
+
 <strong>Let's import and use the `sayHelloWorld` function in the `my-web-app` and the `my-native-app` projects</strong>
 
 <details>
@@ -91,6 +95,8 @@ I will use vite, expo and yarn but feel free to use what you want.
   sayHelloWorld();
   ```
 </details>
+
+
 
 <strong>Let's make a hook that uses the `sayHelloWorld` function:</strong>
 
@@ -111,7 +117,9 @@ I will use vite, expo and yarn but feel free to use what you want.
   ```
 </details>
 
-What if we were to use a different version of react in shared than in the native project ?
+
+
+<strong>What if we were to use a different version of react in shared than in the native project ?</strong>
 
 <details>
   <summary>Answer</summary>
@@ -125,7 +133,9 @@ What if we were to use a different version of react in shared than in the native
   ```
 </details>
 
-Let's now use the `useSayHelloWorld` hook in the `my-native-app` project
+
+
+<strong>Let's now use the `useSayHelloWorld` hook in the `my-native-app` project</strong>
 
 <details>
   <summary>Answer</summary>
