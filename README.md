@@ -256,7 +256,44 @@ For expo, please follow the following instructions to make it compatible with mo
 
 ## 2 - Sharing some platform specific logic
 
-Let's see how shared code behave when there are platform specificities
+<br/>
+We now will add some platform specific logic to the shared package.
+Sometime, each platform will need some dedicated logic.
+Work is ongoing to make it easier to share code between web & native, with react-strict-dom and @react-native-webapis.
+For now, we will do it manually.
+
+<strong>Let's create a function that return the screen width</strong>
+
+<details>
+  <summary>Answer</summary>
+
+  In the `packages/util-shared/src/utils/getScreenWidth.web.ts` file:
+
+  ```ts
+  export function getScreenWidth() {
+    return window.screen.width;
+  }
+  ```
+
+  In the `packages/util-shared/src/utils/getScreenWidth.native.ts` file:
+
+  ```ts
+  import { Dimensions } from "react-native";
+
+  export function getScreenWidth() {
+    return Dimensions.get("window").width;
+  }
+  ```
+</details>
+
+<br/>
+Let's import the `getScreenWidth` function in the `my-web-app` and the `my-native-app` projects
+We need to make sure that the web project can import files with the `.web.ts` extension.
+We do not want to specify the platform in the import statement.
+
+<details>
+  <summary>Answer</summary>
+</details>
 
 ## 3 - Assembling those bricks to create a design system
 
