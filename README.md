@@ -44,7 +44,6 @@ I will use vite, expo and yarn but feel free to use what you want.
 ## 1 - Sharing some common logic
 
 <strong>Let's create a util-package that will be accessible within the respective projects</strong>
-
 <details>
   <summary>Answer</summary>
 
