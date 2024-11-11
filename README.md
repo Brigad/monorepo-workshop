@@ -5,10 +5,11 @@
 We want to create a monorepo with a web project and a native project.
 
 I will use vite, expo and yarn but feel free to use what you want.
+
 For expo, please follow the following instructions to make it compatible with monorepos: https://docs.expo.dev/guides/monorepos/
 
 <details>
-  <summary><strong>Answer</strong></summary>
+  <summary><strong>Todo:</strong></summary>
 
   ```sh
   mkdir packages
@@ -48,7 +49,9 @@ For expo, please follow the following instructions to make it compatible with mo
   <summary>Expo configuration</summary>
 
   Create a `metro.config.js` file in the `packages/my-native-app` folder
+
   Create an `index.js` file in the `packages/my-native-app` folder
+
   Update `package.json` to use the `index.js` file as entry point
 </details>
 
