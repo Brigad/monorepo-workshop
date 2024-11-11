@@ -69,7 +69,7 @@ Let's add a simple function in the `src/sayHelloWorld.ts` file:
 <details>
   <summary><strong>Answer:</strong> Adding the sayHelloWorld function</summary>
 
-  In the `src/sayHelloWorld.ts` file:
+  In the `packages/util-shared/src/utils/sayHelloWorld.ts` file:
 
   ```ts
   export function sayHelloWorld() {
@@ -89,6 +89,53 @@ Let's import and use the `sayHelloWorld` function in the `my-web-app` and the `m
   import { sayHelloWorld } from "@my-monorepo/util-shared";
 
   sayHelloWorld();
+  ```
+</details>
+
+Let's make a hook that uses the `sayHelloWorld` function:
+
+<details>
+  <summary><strong>Answer:</strong> Creating the sayHelloWorld hook</summary>
+
+  In the `packages/util-shared/src/hooks/useSayHelloWorld.ts` file:
+
+  ```tsx
+  import { useEffect } from "react";
+  import { sayHelloWorld } from "@my-monorepo/util-shared";
+
+  export function useSayHelloWorld() {
+    useEffect(() => {
+      sayHelloWorld();
+    }, []);
+  }
+  ```
+</details>
+
+What if we were to use a different version of react in shared than in the native project ?
+
+<details>
+  <summary><strong>Answer:</strong> Using a different version of react in the shared package</summary>
+
+  Let's add react 18.3.1 as a dependency in the `packages/util-shared/package.json` file:
+
+  ```json
+  "dependencies": {
+    "react": "18.3.1"
+  }
+  ```
+</details>
+
+Let's now use the `useSayHelloWorld` hook in the `my-native-app` project
+
+<details>
+  <summary><strong>Answer:</strong> Using the sayHelloWorld hook in the native project</summary>
+
+  In the `packages/my-native-app/app/(tabs)/index.tsx` file:
+
+  ```tsx
+  import { useSayHelloWorld } from "@my-monorepo/util-shared";
+
+  useSayHelloWorld();
   ```
 </details>
 
