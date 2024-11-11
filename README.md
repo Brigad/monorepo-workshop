@@ -257,12 +257,12 @@ For expo, please follow the following instructions to make it compatible with mo
 ## 2 - Sharing some platform specific logic
 
 <br/>
-We now will add some platform specific logic to the shared package.
-Sometime, each platform will need some dedicated logic.
+We now will add some platform specific logic to the shared package.Sometime, each platform will need some dedicated logic.
 
 Work is ongoing to make it easier to share code between web & native, with react-strict-dom and @react-native-webapis.
 
 For now, we will do it manually.
+
 <br/>
 <br/>
 <strong>Let's create a function that return the screen width</strong>
