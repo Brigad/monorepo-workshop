@@ -262,6 +262,7 @@ Sometime, each platform will need some dedicated logic.
 Work is ongoing to make it easier to share code between web & native, with react-strict-dom and @react-native-webapis.
 For now, we will do it manually.
 <br/>
+<br/>
 <strong>Let's create a function that return the screen width</strong>
 
 <details>
@@ -289,6 +290,7 @@ For now, we will do it manually.
 <br/>
 We need to make sure that the web project can import files with the `.web.ts` extension.
 We do not want to specify the platform in the import statement.
+<br/>
 <br/>
 <strong>Let's import the `getScreenWidth` function in the `my-web-app` and the `my-native-app` projects</strong>
 
