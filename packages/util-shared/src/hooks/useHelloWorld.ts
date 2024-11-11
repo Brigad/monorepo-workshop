@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { sayHelloWorld } from "./sayHelloWorld";
+import { sayHelloWorld } from "../utils/sayHelloWorld";
 
 export function useHelloWorld() {
   useEffect(() => {

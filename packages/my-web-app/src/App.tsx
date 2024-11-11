@@ -1,12 +1,12 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
 
-import { useHelloWorld } from "@my-monorepo/shared/useHelloWorld";
-
+import { useHelloWorld } from "@my-monorepo/shared/hooks/useHelloWorld";
+import { Flex } from "@my-monorepo/shared/components/Flex/Flex";
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   useHelloWorld();
 
@@ -29,11 +29,13 @@ function App() {
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Flex flexDirection="column" alignItems="center">
+        <p className="read-the-docs">
+          Click on the Vite and React logos to learn more
+        </p>
+      </Flex>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
