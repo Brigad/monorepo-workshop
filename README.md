@@ -5,6 +5,7 @@
 We want to create a monorepo with a web project and a native project.
 
 I will use vite, expo and yarn but feel free to use what you want.
+For expo, please follow the following instructions to make it compatible with monorepos: https://docs.expo.dev/guides/monorepos/
 
 <details>
   <summary><strong>Answer</strong></summary>
@@ -14,7 +15,7 @@ I will use vite, expo and yarn but feel free to use what you want.
   cd packages
 
   npm create vite@latest
-  npx create-expo-app@latest
+  npx create-expo-app@latest --template blank-typescript
   ```
 
   Let's set up a monorepo with yarn:
@@ -40,6 +41,16 @@ I will use vite, expo and yarn but feel free to use what you want.
   ```
 </details>
 
+<br/>
+
+
+<details>
+  <summary>Expo configuration</summary>
+
+  Create a `metro.config.js` file in the `packages/my-native-app` folder
+  Create an `index.js` file in the `packages/my-native-app` folder
+  Update `package.json` to use the `index.js` file as entry point
+</details>
 
 ## 1 - Sharing some common logic
 
