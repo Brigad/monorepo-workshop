@@ -389,16 +389,129 @@ type FlexProps = {
 <details>
   <summary>Answer</summary>
 
+  In the `packages/util-shared/src/components/Flex.web.tsx` file:
+
+  ```tsx
+  import { FlexProps, getStyleFromProps } from "./Flex.common";
+  import React from "react";
+
+  const defaultStyles = {
+    flexDirection: "column",
+    display: "flex",
+  } as const;
+
+  export const Flex = ({
+    children,
+    ...props
+  }: FlexProps & { children?: React.ReactNode }) => {
+    const style = {
+      ...defaultStyles,
+      ...getStyleFromProps(props, "web"),
+    };
+    return <div style={style}>{children}</div>;
+  };
+  ```
+
   In the `packages/util-shared/src/components/Flex.native.tsx` file:
 
   ```tsx
-  import { View, Platform, ViewStyle } from "react-native";
-  import { FlexProps, getBackgroundColor, getSpacingValue, Spacing } from "./Flex.common";
+  import { View, Platform } from "react-native";
+  import { FlexProps, getStyleFromProps } from "./Flex.common";
   import React from "react";
+
+  const defaultStyles = {
+    flexDirection: "column",
+    alignContent: "stretch",
+    flexShrink: 1,
+  } as const;
+
+  export const Flex = ({
+    children,
+    ...props
+  }: FlexProps & { children?: React.ReactNode }) => {
+    const style = {
+      ...defaultStyles,
+      ...getStyleFromProps(props, Platform.OS as "android" | "ios"),
+    };
+    return <View style={style}>{children}</View>;
+  };
+  ```
+
+  And in the `packages/util-shared/src/components/Flex.common.ts` file:
+
+  ```ts
+  import { type CSSProperties } from "react";
   import { match } from "ts-pattern";
 
-  const getShadowValue = (shadow: "low" | "medium" | "high") => {
-    return match({ shadow, platform: Platform.OS })
+  import type {ViewStyle} from 'react-native';
+
+  export type Spacing = "small" | "medium" | "large";
+
+  type BackgroundColor = "light" | "dark" | "error" | "success" | "warning" | "white";
+
+  export type FlexProps = {
+    flexDirection?: "row" | "column";
+    justifyContent?: "flex-start" | "center" | "flex-end" | "space-between";
+    alignItems?: "flex-start" | "center" | "flex-end" | "stretch";
+    alignContent?: "flex-start" | "center" | "flex-end" | "stretch";
+    alignSelf?: "auto" | "flex-start" | "center" | "flex-end" | "stretch";
+    flex?: number;
+    flexGrow?: number;
+    flexShrink?: number;
+    flexBasis?: number;
+    flexWrap?: "wrap" | "nowrap" | "wrap-reverse";
+    gap?: Spacing;
+    rowGap?: Spacing;
+    columnGap?: Spacing;
+    margin?: Spacing;
+    marginHorizontal?: Spacing;
+    marginVertical?: Spacing;
+    marginTop?: Spacing;
+    marginBottom?: Spacing;
+    marginLeft?: Spacing;
+    marginRight?: Spacing;
+    padding?: Spacing;
+    paddingHorizontal?: Spacing;
+    paddingVertical?: Spacing;
+    paddingTop?: Spacing;
+    paddingBottom?: Spacing;
+    paddingLeft?: Spacing;
+    paddingRight?: Spacing;
+    borderRadius?: Spacing;
+    shadow?: "low" | "medium" | "high";
+    backgroundColor?: BackgroundColor;
+  }
+
+  export const getBackgroundColor = (color: BackgroundColor) => {
+    return match({ color })
+      .with({ color: "light" }, () => "#fafafa")
+      .with({ color: "dark" }, () => "#121212")
+      .with({ color: "error" }, () => "#FF5252")
+      .with({ color: "success" }, () => "#4CAF50")
+      .with({ color: "warning" }, () => "#FF9800")
+      .with({ color: "white" }, () => "#fff")
+      .exhaustive();
+  }
+
+  export const getSpacingValue = (spacing: Spacing) => {
+    return match(spacing)
+      .with("small", () => 4)
+      .with("medium", () => 8)
+      .with("large", () => 16)
+      .exhaustive();
+  };
+
+  const getShadowValue = (shadow: "low" | "medium" | "high", platform: "web" | "android" | "ios") => {
+    return match({ shadow, platform })
+      .with({ shadow: "low", platform: "web" }, () => ({
+        boxShadow: "0 1px 1px 0 rgba(0, 0, 0, 0.18)",
+      }))
+      .with({ shadow: "medium", platform: "web" }, () => ({
+        boxShadow: "0 1px 1px 0 rgba(0, 0, 0, 0.22)",
+      }))
+      .with({ shadow: "high", platform: "web" }, () => ({
+        boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.25)",
+      }))
       .with({ shadow: "low", platform: "ios" }, () => ({
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 1 },
@@ -426,11 +539,11 @@ type FlexProps = {
       .with({ shadow: "high", platform: "android" }, () => ({
         elevation: 4,
       }))
-      .otherwise(() => ({}));
+      .exhaustive();
   };
 
-  const getStyleFromProps = (props: FlexProps) => {
-    return Object.entries(props).reduce<ViewStyle>((acc, [key, value]) => {
+  export const getStyleFromProps = (props: FlexProps, platform: "web" | "android" | "ios") => {
+    return Object.entries(props).reduce<CSSProperties & ViewStyle>((acc, [key, value]) => {
       return {
         ...acc,
         ...match(key)
@@ -460,7 +573,7 @@ type FlexProps = {
             }
           )
           .with("shadow", () => {
-            return getShadowValue(value as "low" | "medium" | "high");
+            return getShadowValue(value as "low" | "medium" | "high", platform);
           })
           .with("backgroundColor", () => {
             return {
@@ -474,110 +587,6 @@ type FlexProps = {
           })),
       };
     }, {});
-  };
-
-  const defaultStyles = {
-    flexDirection: "column",
-    alignContent: "stretch",
-    flexShrink: 1,
-  } as const;
-
-  export const Flex = ({
-    children,
-    ...props
-  }: FlexProps & { children?: React.ReactNode }) => {
-    const style = {
-      ...defaultStyles,
-      ...getStyleFromProps(props),
-    };
-    return <View style={style}>{children}</View>;
-  };
-  ```
-
-  In the `packages/util-shared/src/components/Flex.web.tsx` file:
-
-  ```tsx
-  import { FlexProps, getBackgroundColor, getSpacingValue, Spacing } from "./Flex.common";
-  import React, { CSSProperties } from "react";
-  import { match } from "ts-pattern";
-
-  const getShadowValue = (shadow: "low" | "medium" | "high") => {
-    return match({ shadow })
-      .with({ shadow: "low" }, () => ({
-        boxShadow: "0 1px 1px 0 rgba(0, 0, 0, 0.18)",
-      }))
-      .with({ shadow: "medium" }, () => ({
-        boxShadow: "0 1px 1px 0 rgba(0, 0, 0, 0.22)",
-      }))
-      .with({ shadow: "high" }, () => ({
-        boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.25)",
-      }))
-      .otherwise(() => ({}));
-  };
-
-  const getStyleFromProps = (props: FlexProps) => {
-    return Object.entries(props).reduce<CSSProperties>((acc, [key, value]) => {
-      return {
-        ...acc,
-        ...match(key)
-          .with(
-            "margin",
-            "marginHorizontal",
-            "marginVertical",
-            "marginTop",
-            "marginBottom",
-            "marginLeft",
-            "marginRight",
-            "padding",
-            "paddingHorizontal",
-            "paddingVertical",
-            "paddingTop",
-            "paddingBottom",
-            "paddingLeft",
-            "paddingRight",
-            "rowGap",
-            "columnGap",
-            "gap",
-            "borderRadius",
-            (key) => {
-              return {
-                [key]: getSpacingValue(value as Spacing),
-              };
-            }
-          )
-          .with("shadow", () => {
-            return getShadowValue(value as "low" | "medium" | "high");
-          })
-          .with("backgroundColor", () => {
-            return {
-              backgroundColor: getBackgroundColor(
-                value as "light" | "dark" | "error" | "success" | "warning" | "white"
-              ),
-            };
-          })
-          .otherwise((key) => ({
-            [key]: value,
-          })),
-      };
-    }, {});
-  };
-
-  const defaultStyles = {
-    flexDirection: "column",
-    alignContent: "stretch",
-    flexShrink: 1,
-    display: "flex",
-  } as const;
-
-  export const Flex = ({
-    children,
-    ...props
-  }: FlexProps & { children?: React.ReactNode }) => {
-    const style = {
-      ...defaultStyles,
-      ...getStyleFromProps(props),
-    };
-    return <div style={style}>{children}</div>;
   };
   ```
 </details>
