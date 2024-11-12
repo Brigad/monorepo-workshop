@@ -264,7 +264,6 @@ Work is ongoing to make it easier to share code between web & native, with react
 For now, we will do it manually.
 
 <br/>
-<br/>
 <strong>Let's create a function that return the screen width</strong>
 
 <details>
@@ -382,7 +381,6 @@ type FlexProps = {
 }
 ```
 
-<br/>
 <br/>
 <strong>Let's create the `Flex` component</strong>
 
@@ -591,11 +589,21 @@ type FlexProps = {
   ```
 </details>
 
+<br/>
 We now need something to render text on web and native.
 
-On web, we will use an inline `<div>` and on native, a `<Text>` component.
+On web, we will use an inline `<div>` and on native, a `<Text>` component. We need to be careful with the line height since setting lineHeight: 20 has a different meaning on web and native.
 
-<br/>
+We want our text component props to be:
+
+```ts
+type TextProps = {
+  type: "title" | "subtitle" | "body" | "caption";
+  color: "dark" | "light" | "error" | "success" | "warning";
+  bold?: boolean;
+};
+```
+
 <br/>
 <strong>Let's create the `Text` component</strong>
 
@@ -705,6 +713,29 @@ On web, we will use an inline `<div>` and on native, a `<Text>` component.
   };
   ```
 </details>
+
+<br/>
+
+We could now use the `Flex` and `Text` components in the `my-web-app` and the `my-native-app` projects.
+
+```tsx
+<Flex
+  flexDirection="column"
+  shadow="high"
+  backgroundColor="white"
+  borderRadius="medium"
+  padding="medium"
+  alignItems="center"
+>
+  <Text type="title" color="dark">Open up App.tsx</Text>
+  <Text type="body" color="dark">to start <Text color="dark" type="body" bold>working</Text> on your app!</Text>
+</Flex>
+```
+
+It should now look the same on web and native.
+
+
+
 
 ## 4 - React Strict Dom ? React Native web ?
 
