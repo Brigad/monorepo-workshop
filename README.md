@@ -593,7 +593,118 @@ type FlexProps = {
 
 We now need something to render text on web and native.
 
-Let's create a `<Text>` component. On web, we will use an inline `<div>` and on native, a `<Text>` component.
+On web, we will use an inline `<div>` and on native, a `<Text>` component.
+
+<br/>
+<br/>
+<strong>Let's create the `Text` component</strong>
+
+<details>
+  <summary>Answer</summary>
+
+  In the `packages/util-shared/src/components/Text.web.tsx` file:
+
+  ```tsx
+  import { match } from "ts-pattern";
+  import { TextProps, getStyleFromProps } from "./Text.common";
+  import React from "react";
+
+  const defaultStyles = {
+    display: "inline",
+  } as const;
+
+  const getLineHeight = (type: TextProps["type"]) => {
+    return match(type)
+      .with("title", () => ({ lineHeight: "32px" }))
+      .with("subtitle", () => ({ lineHeight: "24px" }))
+      .with("body", () => ({ lineHeight: "20px" }))
+      .with("caption", () => ({ lineHeight: "16px" }))
+      .exhaustive();
+  };
+
+  export const Text = ({
+    children,
+    color,
+    type,
+    bold,
+  }: TextProps & { children?: React.ReactNode }) => {
+    const style = {
+      ...defaultStyles,
+      ...getLineHeight(type),
+      ...getStyleFromProps({ color, type, bold }),
+    };
+    return <div style={style}>{children}</div>;
+  };
+  ```
+
+  In the `packages/util-shared/src/components/Text.native.tsx` file:
+
+  ```tsx
+  import { Text as RNText } from "react-native";
+  import { TextProps, getStyleFromProps } from "./Text.common";
+  import React from "react";
+  import { match } from "ts-pattern";
+
+  const getLineHeight = (type: TextProps["type"]) => {
+    return match(type)
+      .with("title", () => ({ lineHeight: 32 }))
+      .with("subtitle", () => ({ lineHeight: 24 }))
+      .with("body", () => ({ lineHeight: 20 }))
+      .with("caption", () => ({ lineHeight: 16 }))
+      .exhaustive();
+  };
+
+  export const Text = ({ children, color, type, bold }: TextProps & { children?: React.ReactNode }) => {
+    const style = {
+      ...getStyleFromProps({ color, type, bold }),
+      ...getLineHeight(type),
+    };
+    return <RNText style={style}>{children}</RNText>;
+  };
+  ```
+
+  In the `packages/util-shared/src/components/Text.common.ts` file:
+
+  ```ts
+  import { match } from "ts-pattern";
+  import type { TextStyle } from "react-native";
+  import type { CSSProperties } from "react";
+
+  export type TextProps = {
+    type: "title" | "body" | "subtitle" | "caption";
+    color: "dark" | "light" | "error" | "success" | "warning";
+    bold?: boolean;
+  };
+
+  const getColorFromProps = (color: TextProps["color"]) => {
+    return match({ color })
+      .with({ color: "dark" }, () => "#000")
+      .with({ color: "light" }, () => "#fff")
+      .with({ color: "error" }, () => "#FF5252")
+      .with({ color: "success" }, () => "#4CAF50")
+      .with({ color: "warning" }, () => "#FF9800")
+      .exhaustive();
+  };
+
+  export const getStyleFromProps = ({
+    type,
+    bold,
+    color,
+  }: TextProps): TextStyle & CSSProperties => {
+    return {
+      ...match(type)
+        .with("title", () => ({ fontSize: 24 }))
+        .with("subtitle", () => ({ fontSize: 18 }))
+        .with("body", () => ({ fontSize: 14 }))
+        .with("caption", () => ({ fontSize: 12 }))
+        .exhaustive(),
+      ...(bold ? { fontWeight: "bold" } : {}),
+      color: getColorFromProps(color),
+      fontFamily: "Georgia",
+    };
+  };
+  ```
+</details>
 
 ## 4 - React Strict Dom ? React Native web ?
 
