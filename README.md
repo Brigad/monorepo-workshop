@@ -337,13 +337,13 @@ We do not want to specify the platform in the import statement.
   ```
 </details>
 
-## 4 - Creating the first bricks of our design system
+## 3 - Creating the first bricks of our design system
 
 We want to create a component that will be used in place of `<div>` or `<View>`.
 
 We will use flexbox as it is the common layout system for both web & native.
 
-Let's name that component `<Flex>`.
+Let's name that component `<Flex>`. We will share as much logic as possible, we can create `flex.common.ts` for the shared logic and `flex.(native|web).tsx` for the platform specific logic. Let's use the style prop on both platform for now to simplify the step.
 
 ```tsx
 type Spacing = "small" | "medium" | "large";
@@ -384,7 +384,7 @@ type FlexProps = {
 
 <br/>
 <br/>
-<strong>Let's create the `<Flex>` component</strong>
+<strong>Let's create the `Flex` component</strong>
 
 <details>
   <summary>Answer</summary>
@@ -492,7 +492,93 @@ type FlexProps = {
     };
     return <View style={style}>{children}</View>;
   };
+  ```
 
+  In the `packages/util-shared/src/components/Flex.web.tsx` file:
+
+  ```tsx
+  import { FlexProps, getBackgroundColor, getSpacingValue, Spacing } from "./Flex.common";
+  import React, { CSSProperties } from "react";
+  import { match } from "ts-pattern";
+
+  const getShadowValue = (shadow: "low" | "medium" | "high") => {
+    return match({ shadow })
+      .with({ shadow: "low" }, () => ({
+        boxShadow: "0 1px 1px 0 rgba(0, 0, 0, 0.18)",
+      }))
+      .with({ shadow: "medium" }, () => ({
+        boxShadow: "0 1px 1px 0 rgba(0, 0, 0, 0.22)",
+      }))
+      .with({ shadow: "high" }, () => ({
+        boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.25)",
+      }))
+      .otherwise(() => ({}));
+  };
+
+  const getStyleFromProps = (props: FlexProps) => {
+    return Object.entries(props).reduce<CSSProperties>((acc, [key, value]) => {
+      return {
+        ...acc,
+        ...match(key)
+          .with(
+            "margin",
+            "marginHorizontal",
+            "marginVertical",
+            "marginTop",
+            "marginBottom",
+            "marginLeft",
+            "marginRight",
+            "padding",
+            "paddingHorizontal",
+            "paddingVertical",
+            "paddingTop",
+            "paddingBottom",
+            "paddingLeft",
+            "paddingRight",
+            "rowGap",
+            "columnGap",
+            "gap",
+            "borderRadius",
+            (key) => {
+              return {
+                [key]: getSpacingValue(value as Spacing),
+              };
+            }
+          )
+          .with("shadow", () => {
+            return getShadowValue(value as "low" | "medium" | "high");
+          })
+          .with("backgroundColor", () => {
+            return {
+              backgroundColor: getBackgroundColor(
+                value as "light" | "dark" | "error" | "success" | "warning" | "white"
+              ),
+            };
+          })
+          .otherwise((key) => ({
+            [key]: value,
+          })),
+      };
+    }, {});
+  };
+
+  const defaultStyles = {
+    flexDirection: "column",
+    alignContent: "stretch",
+    flexShrink: 1,
+    display: "flex",
+  } as const;
+
+  export const Flex = ({
+    children,
+    ...props
+  }: FlexProps & { children?: React.ReactNode }) => {
+    const style = {
+      ...defaultStyles,
+      ...getStyleFromProps(props),
+    };
+    return <div style={style}>{children}</div>;
+  };
   ```
 </details>
 
