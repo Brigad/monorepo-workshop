@@ -591,6 +591,10 @@ type FlexProps = {
   ```
 </details>
 
+We now need something to render text on web and native.
+
+Let's create a `<Text>` component. On web, we will use an inline `<div>` and on native, a `<Text>` component.
+
 ## 4 - React Strict Dom ? React Native web ?
 
 How what we build works with the past and future of web sharing technologies
