@@ -734,6 +734,11 @@ We could now use the `Flex` and `Text` components in the `my-web-app` and the `m
 
 It should now look the same on web and native.
 
+Building these foundations for our design system allows us to build abstractions on top of it, and anything that we build can work on both platforms, while each platform can have its own specific implementation, and behave differently if needed.
+
+We could also swap the current implementation of Flex or Text on a specific platform to enable more capabilities, or performances.
+
+Using style props on web is not recommended, let's change that then!
 
 
 
