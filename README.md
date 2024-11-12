@@ -337,9 +337,164 @@ We do not want to specify the platform in the import statement.
   ```
 </details>
 
-## 3 - Assembling those bricks to create a design system
+## 4 - Creating the first bricks of our design system
 
-Let's see how to define primitives components that can be shared between web & native
+We want to create a component that will be used in place of `<div>` or `<View>`.
+
+We will use flexbox as it is the common layout system for both web & native.
+
+Let's name that component `<Flex>`.
+
+```tsx
+type Spacing = "small" | "medium" | "large";
+
+type FlexProps = {
+  flexDirection?: "row" | "column";
+  justifyContent?: "flex-start" | "center" | "flex-end" | "space-between";
+  alignItems?: "flex-start" | "center" | "flex-end" | "stretch";
+  alignContent?: "flex-start" | "center" | "flex-end" | "stretch";
+  alignSelf?: "auto" | "flex-start" | "center" | "flex-end" | "stretch";
+  flex?: number;
+  flexGrow?: number;
+  flexShrink?: number;
+  flexBasis?: number;
+  flexWrap?: "wrap" | "nowrap" | "wrap-reverse";
+  gap?: Spacing;
+  rowGap?: Spacing;
+  columnGap?: Spacing;
+  margin?: Spacing;
+  marginHorizontal?: Spacing;
+  marginVertical?: Spacing;
+  marginTop?: Spacing;
+  marginBottom?: Spacing;
+  marginLeft?: Spacing;
+  marginRight?: Spacing;
+  padding?: Spacing;
+  paddingHorizontal?: Spacing;
+  paddingVertical?: Spacing;
+  paddingTop?: Spacing;
+  paddingBottom?: Spacing;
+  paddingLeft?: Spacing;
+  paddingRight?: Spacing;
+  borderRadius?: Spacing;
+  shadow?: "low" | "medium" | "high";
+  backgroundColor?: "light" | "dark" | "error" | "success" | "warning" | "white";
+}
+```
+
+<br/>
+<br/>
+<strong>Let's create the `<Flex>` component</strong>
+
+<details>
+  <summary>Answer</summary>
+
+  In the `packages/util-shared/src/components/Flex.native.tsx` file:
+
+  ```tsx
+  import { View, Platform, ViewStyle } from "react-native";
+  import { FlexProps, getBackgroundColor, getSpacingValue, Spacing } from "./Flex.common";
+  import React from "react";
+  import { match } from "ts-pattern";
+
+  const getShadowValue = (shadow: "low" | "medium" | "high") => {
+    return match({ shadow, platform: Platform.OS })
+      .with({ shadow: "low", platform: "ios" }, () => ({
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.18,
+        shadowRadius: 1.0,
+      }))
+      .with({ shadow: "medium", platform: "ios" }, () => ({
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+      }))
+      .with({ shadow: "high", platform: "ios" }, () => ({
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+      }))
+      .with({ shadow: "low", platform: "android" }, () => ({
+        elevation: 1,
+      }))
+      .with({ shadow: "medium", platform: "android" }, () => ({
+        elevation: 2,
+      }))
+      .with({ shadow: "high", platform: "android" }, () => ({
+        elevation: 4,
+      }))
+      .otherwise(() => ({}));
+  };
+
+  const getStyleFromProps = (props: FlexProps) => {
+    return Object.entries(props).reduce<ViewStyle>((acc, [key, value]) => {
+      return {
+        ...acc,
+        ...match(key)
+          .with(
+            "margin",
+            "marginHorizontal",
+            "marginVertical",
+            "marginTop",
+            "marginBottom",
+            "marginLeft",
+            "marginRight",
+            "padding",
+            "paddingHorizontal",
+            "paddingVertical",
+            "paddingTop",
+            "paddingBottom",
+            "paddingLeft",
+            "paddingRight",
+            "rowGap",
+            "columnGap",
+            "gap",
+            "borderRadius",
+            (key) => {
+              return {
+                [key]: getSpacingValue(value as Spacing),
+              };
+            }
+          )
+          .with("shadow", () => {
+            return getShadowValue(value as "low" | "medium" | "high");
+          })
+          .with("backgroundColor", () => {
+            return {
+              backgroundColor: getBackgroundColor(
+                value as "light" | "dark" | "error" | "success" | "warning" | "white"
+              ),
+            };
+          })
+          .otherwise((key) => ({
+            [key]: value,
+          })),
+      };
+    }, {});
+  };
+
+  const defaultStyles = {
+    flexDirection: "column",
+    alignContent: "stretch",
+    flexShrink: 1,
+  } as const;
+
+  export const Flex = ({
+    children,
+    ...props
+  }: FlexProps & { children?: React.ReactNode }) => {
+    const style = {
+      ...defaultStyles,
+      ...getStyleFromProps(props),
+    };
+    return <View style={style}>{children}</View>;
+  };
+
+  ```
+</details>
 
 ## 4 - React Strict Dom ? React Native web ?
 
