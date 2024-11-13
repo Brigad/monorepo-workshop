@@ -1081,6 +1081,22 @@ Using style props on web is not recommended, let's change that then! We can use 
   ```
 </details>
 
+<br/>
+
+We can see that we are completely free to implement any component as we want on each platform, as long as we respect the common interface.
+
+We can even have some platform specific props, for example, if a feature is only available on a specific platform.
+Because whenever we import a component, let's say in a web project, TypeScript will automatically import the platform specific one with it's types.
+
+Depending on the "moduleSuffixes" configuration of the project, TypeScript will resolve the correct types for the imported component, respecting the order of the suffixes.
+
+But what if the current project doesn't have a fixed platform? We should improve that!
+
+Let's create a `Box` component in util-shared that uses Flex and Text components.
+Box will be the first component of our design system, that uses the Flex component to normalize the styles.
+It should only be used for margin, padding, borderRadius, backgroundColor and shadow. Because we use flexbox, all our components also need to be able to set flexGrow and flexShrink.
+We will need to help typescript a little bit with a `d.ts` file.
+
 
 
 ## 4 - React Strict Dom ? React Native web ?
