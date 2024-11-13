@@ -1096,14 +1096,50 @@ Depending on the "moduleSuffixes" configuration of the project, TypeScript will 
 
 But what if the current project doesn't have a fixed platform? We should improve that!
 
+## 4 - Building our design system (Box, Stack, Inline, Button)
+
 Box will be the first component of our design system, that uses the Flex component to normalize the styles.<br/>
 It should only be used for margin, padding, borderRadius, backgroundColor and shadow.<br/>
 Because we use flexbox, all our components also need to be able to set flexGrow and flexShrink.
 
 We will need to help typescript a little bit with a `d.ts` file.
 
+<details>
+  <summary>Answer</summary>
 
+  In the `packages/util-shared/src/components/box/Box.tsx` file:
 
-## 4 - React Strict Dom ? React Native web ?
+  ```tsx
+  import { Flex } from "@my-monorepo/shared/components/flex/Flex";
+  import { FlexProps } from "@my-monorepo/shared/components/flex/Flex.common";
+  import { FunctionComponent, ReactNode } from "react";
 
-How what we build works with the past and future of web sharing technologies
+  type BoxProps = Omit<FlexProps, "direction" | "alignItems" | "justifyContent" | "alignSelf" | "alignContent" | "gap" | "columnGap" | "rowGap" | "wrap" | "flexWrap" | "flexDirection" | "flexBasis" | "flex" | "marginLeft" | "marginRight" | "marginTop" | "marginBottom" | "paddingLeft" | "paddingRight" | "paddingTop" | "paddingBottom">;
+
+  const Box: FunctionComponent<BoxProps & { children: ReactNode }> = ({ children, ...props }) => {
+    return <Flex {...props}>{children}</Flex>;
+  };
+
+  export { Box };
+  ```
+
+  In the `packages/util-shared/src/components/flex/Flex.d.ts` file:
+
+  ```ts
+  declare module "@my-monorepo/shared/components/flex/Flex" {
+    import { ComponentProps, FunctionComponent } from "react";
+
+    import { Flex as FlexNative } from "@my-monorepo/shared/components/flex/Flex.native";
+    import { Flex as FlexWeb } from "@my-monorepo/shared/components/flex/Flex.web";
+
+    type Flex = FunctionComponent<
+      ComponentProps<typeof FlexWeb> & ComponentProps<typeof FlexNative>
+    >;
+
+    const Flex: Flex;
+
+    export { Flex };
+  }
+  ```
+
+</details>
