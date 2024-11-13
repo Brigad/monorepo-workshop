@@ -1093,8 +1093,10 @@ Depending on the "moduleSuffixes" configuration of the project, TypeScript will 
 But what if the current project doesn't have a fixed platform? We should improve that!
 
 Let's create a `Box` component in util-shared that uses Flex and Text components.<br/>
-Box will be the first component of our design system, that uses the Flex component to normalize the styles.
-It should only be used for margin, padding, borderRadius, backgroundColor and shadow. Because we use flexbox, all our components also need to be able to set flexGrow and flexShrink.
+Box will be the first component of our design system, that uses the Flex component to normalize the styles.<br/>
+It should only be used for margin, padding, borderRadius, backgroundColor and shadow.<br/>
+Because we use flexbox, all our components also need to be able to set flexGrow and flexShrink.
+
 We will need to help typescript a little bit with a `d.ts` file.
 
 
