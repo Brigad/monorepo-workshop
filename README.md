@@ -1039,7 +1039,7 @@ Using style props on web is not recommended, let's change that then! We can use 
           .with("alignContent", () => getAlignContent(value as FlexProps["alignContent"]))
           .with("alignSelf", () => getAlignSelf(value as FlexProps["alignSelf"]))
           .with("justifyContent", () => getJustifyContent(value as FlexProps["justifyContent"]))
-          .with("flexDirection", () => getFlexDirection(value as FlexProps["flexDirection"] ?? "column"))
+          .with("flexDirection", () => getFlexDirection(value as FlexProps["flexDirection"]))
           .with("gap", () => getGap(value as FlexProps["gap"]))
           .with("rowGap", () => getRowGap(value as FlexProps["rowGap"]))
           .with("columnGap", () => getColumnGap(value as FlexProps["columnGap"]))
@@ -1072,9 +1072,13 @@ Using style props on web is not recommended, let's change that then! We can use 
 
   export const Flex = ({
     children,
+    flexDirection = "column",
     ...props
   }: FlexProps & { children?: React.ReactNode }) => {
-    const classNames = getClassNameFromProps(props);
+    const classNames = getClassNameFromProps({
+      flexDirection,
+      ...props,
+    });
 
     return <div className={classNames}>{children}</div>;
   };
@@ -1092,7 +1096,6 @@ Depending on the "moduleSuffixes" configuration of the project, TypeScript will 
 
 But what if the current project doesn't have a fixed platform? We should improve that!
 
-Let's create a `Box` component in util-shared that uses Flex and Text components.<br/>
 Box will be the first component of our design system, that uses the Flex component to normalize the styles.<br/>
 It should only be used for margin, padding, borderRadius, backgroundColor and shadow.<br/>
 Because we use flexbox, all our components also need to be able to set flexGrow and flexShrink.
