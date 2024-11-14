@@ -372,7 +372,7 @@ We want to create a component that will be used in place of `<div>` or `<View>`.
 
 We will use flexbox as it is the common layout system for both web & native.
 
-Let's name that component `<Flex>`. We will share as much logic as possible, we can create `flex.common.ts` for the shared logic and `flex.(native|web).tsx` for the platform specific logic. Let's use the style prop on both platform for now to simplify the step.
+Let's name that component `<Flex>`. We will share as much logic as possible, we can create `Flex.common.ts` for the shared logic and `Flex.(native|web).tsx` for the platform specific logic. Let's use the style prop on both platform for now to simplify the step.
 
 ```tsx
 type Spacing = "small" | "medium" | "large";
