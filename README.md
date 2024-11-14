@@ -177,6 +177,9 @@ For expo, please follow the following instructions to make it compatible with mo
 </details>
 
 <br/>
+
+Sometimes, in a monorepo, multiple versions of the same package can be installed.
+It's important to understand how the resolution works, to be able to fix issues that arise from that.
 <strong>What if we were to use a different version of react in shared than in the native project ?</strong>
 
 <details>
