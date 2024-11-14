@@ -17,8 +17,8 @@ For expo, please follow the following instructions to make it compatible with mo
   mkdir packages
   cd packages
 
-  npm create vite@latest
-  npx create-expo-app@latest --template blank-typescript
+  npm create vite@latest my-web-app -- --template react-ts
+  npx create-expo-app@latest my-native-app --template blank-typescript
   ```
 
   Let's set up a monorepo with yarn:
