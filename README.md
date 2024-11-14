@@ -1127,7 +1127,7 @@ Because whenever we import a component, let's say in a web project, TypeScript w
 
 Depending on the "moduleSuffixes" configuration of the project, TypeScript will resolve the correct types for the imported component, respecting the order of the suffixes.
 
-But what if the current project doesn't have a fixed platform? We should improve that!
+But what if the current project doesn't have a fixed platform like our `util-shared` package? We will improve that in the next step!
 
 ## 4 - Building our design system (Box, Stack, Inline, Button)
 
