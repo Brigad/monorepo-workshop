@@ -1,4 +1,12 @@
-# monorepo-workshop
+# Building a design system for web & native with a monorepo
+
+By the end of this workshop, you will be able to:
+- Setup a monorepo with mixed projects
+- Share code between web & native
+- Create a design system for web & native
+
+We will create a basic design system with a `Box`, `Stack` and `Inline` component.
+
 
 ## Setup a monorepo with mixed projects
 
@@ -614,7 +622,8 @@ type FlexProps = {
 <br/>
 We now need something to render text on web and native.
 
-On web, we will use an inline `<div>` and on native, a `<Text>` component. We need to be careful with the line height since setting lineHeight: 20 has a different meaning on web and native.
+On web, we will use an inline `<div>` and on native, a `<Text>` component. We need to be careful with the line height since setting `lineHeight: 20` has a different meaning on web and native.
+On native, 20 means 20px, on web, it means 20 times the fontSize (We need to be explicit and write `lineHeight: "20px"`).
 
 We want our text component props to be:
 
