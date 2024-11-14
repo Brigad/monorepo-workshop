@@ -54,7 +54,7 @@ For expo, please follow the following instructions to make it compatible with mo
 ## 1 - Sharing some common logic
 
 <br/>
-<strong>Let's create a util-package that will be accessible within the respective projects</strong>
+<strong>Let's create a util-shared package that will be accessible within the respective projects</strong>
 
 <details>
   <summary>Answer</summary>
