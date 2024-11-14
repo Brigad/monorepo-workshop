@@ -1324,3 +1324,95 @@ Because we use flexbox, all our components also need to be able to set flexGrow 
   ```
 </details>
 
+## 5 - Making our design system responsive to multiple screen sizes
+
+It would be nice if we could make our components adapt to the screen size.
+
+Let's define 3 breakpoints:
+- mobile: 0px - 767px
+- tablet: 768px - 1023px
+- desktop: 1024px - ...
+
+We want any prop we pass to our components to be able to be set for each breakpoint.
+
+We want to be able to do this:
+
+```tsx
+// [mobile, tablet, desktop]
+<Box padding={["small", "medium", "large"]} />
+```
+
+<details>
+  <summary>Answer</summary>
+
+  You could create some types to help:
+  ```ts
+  type ResponsiveType<T> = T | [T | "none", T | "none", T | "none"];
+
+  export type ResponsiveTypes<T> = {
+    [key in keyof T]: ResponsiveType<T[key]>;
+  };
+  ```
+
+  Then you can use it like this:
+  ```ts
+  export type ResponsiveFlexProps = ResponsiveTypes<FlexProps>;
+  export type ResponsiveBoxProps = ResponsiveTypes<BoxProps>;
+  export type ResponsiveInlineProps = ResponsiveTypes<InlineProps>;
+  export type ResponsiveStackProps = ResponsiveTypes<StackProps>;
+  ```
+
+  You now need to implement the logic to make it work for Flex for each of your implementations.
+
+  If you use tailwind and css meida queries, you can do something like this:
+  (Do not forget to force tailwind to bundle the classes since we are doing some dynamic stuff and it's not meant for that)
+  ```tsx
+  const makeResponsive = <T,>(func: (T) => string) => {
+    return (value: T | [T | "none", T | "none", T | "none"]) => {
+      if (!Array.isArray(value)) {
+        return func(value);
+      }
+
+      return value
+        .map((v, i) => {
+          if (v === "none") {
+            return undefined;
+          }
+
+          return `${match(i as 0 | 1 | 2)
+            .with(0, () => "max-md:")
+            .with(1, () => "md:max-lg:")
+            .with(2, () => "lg:")
+            .exhaustive()}${func(v)}`;
+        })
+        .filter(Boolean)
+        .join(" ");
+    };
+  };
+  ```
+
+  if you use stylesheets there is no media queries, but you can do something like this:
+  ```tsx
+  const screenWidth = getScreenWidth();
+  const index = match(screenWidth)
+    .when((width) => width >= 1280, () => 2)
+    .when((width) => width >= 768, () => 1)
+    .otherwise(() => 0);
+  ```
+
+  And use it like this:
+  ```tsx
+  export const getSpacingValue = (spacing: ResponsiveType<Spacing>) => {
+    return match(Array.isArray(spacing) ? spacing[index] : spacing)
+      .with("small", () => 4)
+      .with("medium", () => 8)
+      .with("large", () => 16)
+      .with("none", () => 0)
+      .exhaustive();
+  };
+  ```
+</details>
+
+## 6 - Bonus components - if you want to go further
+
+You can now implement bonus components like Button, Image, and many more!
