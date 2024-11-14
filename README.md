@@ -228,8 +228,6 @@ Let's add react 18.2.0 as a dependency in the `packages/util-shared/package.json
   In the `packages/my-native-app/metro.config.js` file:
 
   ```js
-  const path = require("path");
-
   const librariesToDedupe = [
     "react-native",
     "react",
@@ -281,7 +279,7 @@ Let's add react 18.2.0 as a dependency in the `packages/util-shared/package.json
 ## 2 - Sharing some platform specific logic
 
 <br/>
-We now will add some platform specific logic to the shared package.Sometime, each platform will need some dedicated logic.
+We will now add some platform specific logic to the shared package. Sometimes, each platform will need some dedicated logic.
 
 Work is ongoing to make it easier to share code between web & native, with react-strict-dom and @react-native-webapis.
 
