@@ -174,7 +174,7 @@ For expo, please follow the following instructions to make it compatible with mo
 
   ```tsx
   import { useEffect } from "react";
-  import { sayHelloWorld } from "@my-monorepo/util-shared";
+  import { sayHelloWorld } from "../utils/sayHelloWorld";
 
   export function useSayHelloWorld() {
     useEffect(() => {
