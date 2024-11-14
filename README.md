@@ -12,6 +12,8 @@ For expo, please follow the following instructions to make it compatible with mo
   <summary><strong>General setup</strong></summary>
 
   ```sh
+  mkdir my-monorepo
+  cd my-monorepo
   mkdir packages
   cd packages
 
