@@ -173,11 +173,11 @@ For expo, please follow the following instructions to make it compatible with mo
 <details>
   <summary>Answer</summary>
 
-  Let's add react 18.3.1 as a dependency in the `packages/util-shared/package.json` file:
+  Let's add react 18.2.0 as a dependency in the `packages/util-shared/package.json` file:
 
   ```json
   "dependencies": {
-    "react": "18.3.1"
+    "react": "18.2.0"
   }
   ```
 </details>
