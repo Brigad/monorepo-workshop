@@ -58,9 +58,9 @@ For expo, please follow the following instructions to make it compatible with mo
 <details>
   <summary><strong>Expo configuration</strong></summary>
 
-  Create a `metro.config.js` file in the `packages/my-native-app` folder
+  Create a [metro.config.js](https://docs.expo.dev/guides/monorepos/#modify-the-metro-config) file in the `packages/my-native-app` folder
 
-  Create an `index.js` file in the `packages/my-native-app` folder
+  Create an [index.js](https://docs.expo.dev/guides/monorepos/#change-default-entrypoint) file in the `packages/my-native-app` folder
 
   Update `package.json` to use the `index.js` file as entry point
 </details>
