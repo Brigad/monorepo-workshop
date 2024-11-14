@@ -328,7 +328,7 @@ We do not want to specify the platform in the import statement.
 
 <details>
   <summary>Answer</summary>
-  In the `packages/my-web-app/tsconfig.json` and the `packages/my-native-app/tsconfig.json` files:
+  In the `packages/my-web-app/tsconfig.app.json` and the `packages/my-native-app/tsconfig.json` files:
 
   ```json
   "moduleSuffixes": [".web", ""],
