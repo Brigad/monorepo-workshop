@@ -1139,6 +1139,18 @@ Box will be the first component of our design system, that uses the Flex compone
 It should only be used for margin, padding, borderRadius, backgroundColor and shadow.<br/>
 Because we use flexbox, all our components also need to be able to set flexGrow and flexShrink.
 
+First, let's define a tsconfig.json file for the `util-shared` package.
+
+```json
+{
+  "compilerOptions": {
+    "paths": {
+      "@my-monorepo/util-shared/*": ["./src/*"]
+    }
+  }
+}
+```
+
 We will need to help typescript a little bit with a `d.ts` file.
 
 <details>
@@ -1147,8 +1159,8 @@ We will need to help typescript a little bit with a `d.ts` file.
   In the `packages/util-shared/src/components/box/Box.tsx` file:
 
   ```tsx
-  import { Flex } from "@my-monorepo/shared/components/flex/Flex";
-  import { FlexProps } from "@my-monorepo/shared/components/flex/Flex.common";
+  import { Flex } from "@my-monorepo/util-shared/components/flex/Flex";
+  import { FlexProps } from "@my-monorepo/util-shared/components/flex/Flex.common";
   import { FunctionComponent, ReactNode } from "react";
 
   type BoxProps = Omit<FlexProps, "direction" | "alignItems" | "justifyContent" | "alignSelf" | "alignContent" | "gap" | "columnGap" | "rowGap" | "wrap" | "flexWrap" | "flexDirection" | "flexBasis" | "flex" | "marginLeft" | "marginRight" | "marginTop" | "marginBottom" | "paddingLeft" | "paddingRight" | "paddingTop" | "paddingBottom">;
@@ -1163,11 +1175,11 @@ We will need to help typescript a little bit with a `d.ts` file.
   In the `packages/util-shared/src/components/flex/Flex.d.ts` file:
 
   ```ts
-  declare module "@my-monorepo/shared/components/flex/Flex" {
+  declare module "@my-monorepo/util-shared/components/flex/Flex" {
     import { ComponentProps, FunctionComponent } from "react";
 
-    import { Flex as FlexNative } from "@my-monorepo/shared/components/flex/Flex.native";
-    import { Flex as FlexWeb } from "@my-monorepo/shared/components/flex/Flex.web";
+    import { Flex as FlexNative } from "@my-monorepo/util-shared/components/flex/Flex.native";
+    import { Flex as FlexWeb } from "@my-monorepo/util-shared/components/flex/Flex.web";
 
     type Flex = FunctionComponent<
       ComponentProps<typeof FlexWeb> & ComponentProps<typeof FlexNative>
@@ -1191,8 +1203,8 @@ Because we use flexbox, all our components also need to be able to set flexGrow 
   In the `packages/util-shared/src/components/stack/Stack.tsx` file:
 
   ```tsx
-  import { Flex } from "@my-monorepo/shared/components/flex/Flex";
-  import { Spacing } from "@my-monorepo/shared/components/flex/Flex.common";
+  import { Flex } from "@my-monorepo/util-shared/components/flex/Flex";
+  import { Spacing } from "@my-monorepo/util-shared/components/flex/Flex.common";
   import { FunctionComponent, ReactNode } from "react";
 
   export type HorizontalAlign = "stretch" | "left" | "center" | "right";
@@ -1261,8 +1273,8 @@ Because we use flexbox, all our components also need to be able to set flexGrow 
   In the `packages/util-shared/src/components/inline/Inline.tsx` file:
 
   ```tsx
-  import { Flex } from "@my-monorepo/shared/components/flex/Flex";
-  import { Spacing } from "@my-monorepo/shared/components/flex/Flex.common";
+  import { Flex } from "@my-monorepo/util-shared/components/flex/Flex";
+  import { Spacing } from "@my-monorepo/util-shared/components/flex/Flex.common";
   import { FunctionComponent, ReactNode } from "react";
 
   export type HorizontalAlign =
