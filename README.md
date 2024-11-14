@@ -1141,5 +1141,153 @@ We will need to help typescript a little bit with a `d.ts` file.
     export { Flex };
   }
   ```
+</details>
+
+Stack and Inline are very similar to Flex, they just have a default flexDirection of "column" and "row" respectively.<br/>
+They also have a `space` prop, that is passed to the Flex component as a `gap` prop.<br/>
+Inline also has a `wrap` prop, that is passed to the Flex component as a `flexWrap` prop.
+
+<details>
+  <summary>Stack implementation</summary>
+
+  In the `packages/util-shared/src/components/stack/Stack.tsx` file:
+
+  ```tsx
+  import { Flex } from "@my-monorepo/shared/components/flex/Flex";
+  import { Spacing } from "@my-monorepo/shared/components/flex/Flex.common";
+  import { FunctionComponent, ReactNode } from "react";
+
+  export type HorizontalAlign = "stretch" | "left" | "center" | "right";
+
+  export type VerticalAlign =
+    | "top"
+    | "center"
+    | "bottom"
+    | "space-between"
+    | "space-around";
+
+  const horizontalAlignToAlignItemMap = {
+    left: "flex-start",
+    right: "flex-end",
+    center: "center",
+    stretch: "stretch",
+  } as const;
+
+  const verticalAlignToAlignContentMap = {
+    top: "flex-start",
+    bottom: "flex-end",
+    center: "center",
+    "space-between": "space-between",
+    "space-around": "space-around",
+  } as const;
+
+  type StackProps = {
+    space?: Spacing;
+    horizontalAlign?: HorizontalAlign;
+    verticalAlign?: VerticalAlign;
+    flexGrow?: number;
+    flexShrink?: number;
+  };
+
+  const Stack: FunctionComponent<StackProps & { children: ReactNode }> = ({
+    children,
+    space,
+    horizontalAlign,
+    verticalAlign,
+    flexGrow,
+    flexShrink,
+  }) => {
+    return (
+      <Flex
+        flexDirection="column"
+        gap={space}
+        flexGrow={flexGrow}
+        flexShrink={flexShrink}
+        alignItems={horizontalAlignToAlignItemMap[horizontalAlign]}
+        justifyContent={verticalAlignToAlignContentMap[verticalAlign]}
+      >
+        {children}
+      </Flex>
+    );
+  };
+
+  export { Stack };
+```
+</details>
+
+<br/>
+
+<details>
+  <summary>Inline implementation</summary>
+
+  In the `packages/util-shared/src/components/inline/Inline.tsx` file:
+
+  ```tsx
+  import { Flex } from "@my-monorepo/shared/components/flex/Flex";
+  import { Spacing } from "@my-monorepo/shared/components/flex/Flex.common";
+  import { FunctionComponent, ReactNode } from "react";
+
+  export type HorizontalAlign =
+    | "left"
+    | "center"
+    | "right"
+    | "space-between"
+    | "space-around";
+
+  export type VerticalAlign = "stretch" | "top" | "center" | "bottom";
+
+  const verticalAlignToAlignItems = {
+    stretch: 'stretch',
+    top: 'flex-start',
+    center: 'center',
+    bottom: 'flex-end',
+    none: 'none',
+  } as const;
+
+  const horizontalAlignToJustifyContent = {
+    left: 'flex-start',
+    center: 'center',
+    right: 'flex-end',
+    'space-between': 'space-between',
+    'space-around': 'space-around',
+    none: 'none',
+  } as const;
+
+  type InlineProps = {
+    space?: Spacing;
+    horizontalAlign?: HorizontalAlign;
+    verticalAlign?: VerticalAlign;
+    flexGrow?: number;
+    flexShrink?: number;
+    wrap?: boolean;
+  };
+
+  const Inline: FunctionComponent<InlineProps & { children: ReactNode }> = ({
+    children,
+    space,
+    horizontalAlign,
+    verticalAlign,
+    flexGrow,
+    flexShrink,
+    wrap,
+  }) => {
+    return (
+      <Flex
+        flexDirection="row"
+        gap={space}
+        flexGrow={flexGrow}
+        flexShrink={flexShrink}
+        alignItems={verticalAlignToAlignItems[verticalAlign]}
+        justifyContent={horizontalAlignToJustifyContent[horizontalAlign]}
+        flexWrap={wrap ? "wrap" : "nowrap"}
+      >
+        {children}
+      </Flex>
+    );
+  };
+
+  export { Inline };
+
+  ```
 
 </details>
