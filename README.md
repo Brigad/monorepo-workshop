@@ -1144,6 +1144,7 @@ First, let's define a tsconfig.json file for the `util-shared` package.
 ```json
 {
   "compilerOptions": {
+    "jsx": "react-jsx",
     "paths": {
       "@my-monorepo/util-shared/*": ["./src/*"]
     }
