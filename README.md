@@ -762,6 +762,8 @@ We could also swap the current implementation of Flex or Text on a specific plat
 
 Using style props on web is not recommended, let's change that then! We can use any styling system we want on web, let's use tailwind css for this example.
 
+(If you use expo on the web, https://docs.expo.dev/versions/latest/config/metro/#tailwind).
+
 <br/>
 <strong>Let's change the `Flex` component to use tailwind css on web</strong>
 
