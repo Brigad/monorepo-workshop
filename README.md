@@ -24,8 +24,16 @@ For expo, please follow the following instructions to make it compatible with mo
   Let's set up a monorepo with yarn:
 
   ```sh
+  # remove the packages/my-*-app/node_modules folder
+  rm -rf packages/my-web-app/node_modules
+  rm -rf packages/my-native-app/node_modules
+  rm -rf packages/my-web-app/package-lock.json
+  rm -rf packages/my-native-app/package-lock.json
+
+  # In the root of the monorepo
   yarn init
   yarn set version stable
+
   yarn install
   ```
 
