@@ -33,8 +33,6 @@ For expo, please follow the following instructions to make it compatible with mo
   # In the root of the monorepo
   yarn init --yes
   yarn set version stable
-
-  yarn install
   ```
 
   Let's set the node linker to node-modules in the `.yarnrc.yml` file:
@@ -49,6 +47,12 @@ For expo, please follow the following instructions to make it compatible with mo
   "workspaces": [
     "packages/*"
   ]
+  ```
+
+  Install the dependencies:
+
+  ```sh
+  yarn install
   ```
 </details>
 <details>
