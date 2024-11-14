@@ -180,19 +180,17 @@ For expo, please follow the following instructions to make it compatible with mo
 
 Sometimes, in a monorepo, multiple versions of the same package can be installed.
 It's important to understand how the resolution works, to be able to fix issues that arise from that.
-<strong>What if we were to use a different version of react in shared than in the native project ?</strong>
 
-<details>
-  <summary>Answer</summary>
 
-  Let's add react 18.2.0 as a dependency in the `packages/util-shared/package.json` file:
+What if we were to use a different version of react in shared than in the native project ?
 
-  ```json
-  "dependencies": {
-    "react": "18.2.0"
-  }
-  ```
-</details>
+Let's add react 18.2.0 as a dependency in the `packages/util-shared/package.json` file:
+
+```json
+"dependencies": {
+  "react": "18.2.0"
+}
+```
 
 <br/>
 <strong>Let's now use the `useSayHelloWorld` hook in the `my-native-app` project</strong>
@@ -1314,7 +1312,6 @@ Because we use flexbox, all our components also need to be able to set flexGrow 
   };
 
   export { Inline };
-
   ```
 
 </details>
