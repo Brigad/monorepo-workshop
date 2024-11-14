@@ -1143,9 +1143,10 @@ We will need to help typescript a little bit with a `d.ts` file.
   ```
 </details>
 
-Stack and Inline are very similar to Flex, they just have a default flexDirection of "column" and "row" respectively.<br/>
+Stack and Inline are simpler versions of Flex, they just have a default flexDirection of "column" and "row" respectively.<br/>
 They also have a `space` prop, that is passed to the Flex component as a `gap` prop.<br/>
-Inline also has a `wrap` prop, that is passed to the Flex component as a `flexWrap` prop.
+Inline also has a `wrap` prop, that is passed to the Flex component as a `flexWrap` prop.<br/>
+Because we use flexbox, all our components also need to be able to set flexGrow and flexShrink.
 
 <details>
   <summary>Stack implementation</summary>
