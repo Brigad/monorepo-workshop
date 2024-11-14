@@ -31,7 +31,7 @@ For expo, please follow the following instructions to make it compatible with mo
   rm -rf packages/my-native-app/package-lock.json
 
   # In the root of the monorepo
-  yarn init
+  yarn init --yes
   yarn set version stable
 
   yarn install
