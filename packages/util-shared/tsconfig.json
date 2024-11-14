@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@my-monorepo/shared/*": ["./src/*"]
+    },
+    "jsx": "react-jsx",
+    "esModuleInterop": true
+  }
+}

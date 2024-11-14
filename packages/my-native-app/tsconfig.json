@@ -3,17 +3,11 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "@/*": [
-        "./*",
-
-      ],
-      "@my-monorepo/shared/*": ["../util-shared/src/*"]
-    }
+      "@my-monorepo/shared/*": [
+        "../util-shared/src/*"
+      ]
+    },
+    "moduleSuffixes": [".ios", ".android", ".native", ""]
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-  ]
+
 }

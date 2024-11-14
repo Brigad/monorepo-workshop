@@ -1,29 +1,20 @@
-import { View } from "react-native";
-import { FlexProps } from "./utils";
+import { View, Platform } from "react-native";
+import { getStyleFromProps, ResponsiveFlexProps } from "./Flex.common";
 import React from "react";
-import { getStyles } from "../../utils/responsive-styles/ResponsiveStyles.native";
+
+const defaultStyles = {
+  flexDirection: "column",
+  alignContent: "stretch",
+  flexShrink: 1,
+} as const;
 
 export const Flex = ({
   children,
-  alignContent,
-  alignItems,
-  justifyContent,
-  alignSelf,
-  flexDirection,
-  wrap,
-  flexGrow,
-  flexShrink,
-}: FlexProps) => {
-  const style = getStyles({
-    alignContent,
-    alignItems,
-    justifyContent,
-    alignSelf,
-    flexDirection,
-    flexWrap: wrap,
-    flexGrow,
-    flexShrink,
-  });
-
+  ...props
+}: ResponsiveFlexProps & { children?: React.ReactNode }) => {
+  const style = {
+    ...defaultStyles,
+    ...getStyleFromProps(props, Platform.OS as "android" | "ios"),
+  };
   return <View style={style}>{children}</View>;
 };
