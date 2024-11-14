@@ -1129,7 +1129,7 @@ Depending on the "moduleSuffixes" configuration of the project, TypeScript will 
 
 But what if the current project doesn't have a fixed platform like our `util-shared` package? We will improve that in the next step!
 
-## 4 - Building our design system (Box, Stack, Inline, Button)
+## 4 - Building our design system (Box, Stack, Inline)
 
 Box will be the first component of our design system, that uses the Flex component to normalize the styles.<br/>
 It should only be used for margin, padding, borderRadius, backgroundColor and shadow.<br/>
@@ -1322,5 +1322,5 @@ Because we use flexbox, all our components also need to be able to set flexGrow 
 
   export { Inline };
   ```
-
 </details>
+
