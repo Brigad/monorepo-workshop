@@ -19,6 +19,9 @@ For expo, please follow the following instructions to make it compatible with mo
 
   npm create vite@latest my-web-app -- --template react-ts
   npx create-expo-app@latest my-native-app --template blank-typescript
+  # if you want to run your expo app on web, you can use the following command:
+  cd my-native-app
+  npx expo install react-dom react-native-web @expo/metro-runtime
   ```
 
   Let's set up a monorepo with yarn:
@@ -68,7 +71,7 @@ For expo, please follow the following instructions to make it compatible with mo
 ## 1 - Sharing some common logic
 
 <br/>
-<strong>Let's create a util-shared package that will be accessible within the respective projects</strong>
+<strong>Let's create a `util-shared` package that will be accessible within the respective projects</strong>
 
 <details>
   <summary>Answer</summary>
@@ -114,6 +117,8 @@ For expo, please follow the following instructions to make it compatible with mo
 
   ```tsx
   import { sayHelloWorld } from "@my-monorepo/util-shared/utils/sayHelloWorld";
+  // Notice that we did not specify 'src' in the import statement, so it's not working yet
+  // We will fix it in the next step
 
   sayHelloWorld();
   ```
@@ -141,8 +146,12 @@ For expo, please follow the following instructions to make it compatible with mo
   In the `packages/my-web-app/tsconfig.app.json` and the `packages/my-native-app/tsconfig.json` files:
 
   ```json
-  "paths": {
-    "@my-monorepo/util-shared/*": ["../util-shared/src/*"]
+  {
+    "compilerOptions": {
+      "paths": {
+        "@my-monorepo/util-shared/*": ["../util-shared/src/*"]
+      }
+    }
   }
   ```
 </details>
