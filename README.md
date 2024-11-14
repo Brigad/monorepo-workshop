@@ -331,11 +331,15 @@ We do not want to specify the platform in the import statement.
   In the `packages/my-web-app/tsconfig.app.json` and the `packages/my-native-app/tsconfig.json` files:
 
   ```json
-  "moduleSuffixes": [".web", ""],
+  "compilerOptions": {
+    "moduleSuffixes": [".web", ""],
+  }
   ```
   OR
   ```json
-  "moduleSuffixes": [".ios", ".android", ".native", ""],
+  "compilerOptions": {
+    "moduleSuffixes": [".ios", ".android", ".native", ""],
+  }
   ```
   In the `packages/my-web-app/vite.config.ts` file:
 
