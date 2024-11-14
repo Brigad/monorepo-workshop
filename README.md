@@ -1381,7 +1381,7 @@ We want to be able to do this:
 
   You now need to implement the logic to make it work for Flex for each of your implementations.
 
-  If you use tailwind and css meida queries, you can do something like this:
+  If you use tailwind and css media queries, you can do something like this:
   (Do not forget to force tailwind to bundle the classes since we are doing some dynamic stuff and it's not meant for that)
   ```tsx
   const makeResponsive = <T,>(func: (T) => string) => {
